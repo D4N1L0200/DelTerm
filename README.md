@@ -32,6 +32,10 @@ DelTerm is a lightweight terminal emulator designed to provide basic functionali
     ```bash
     cd DelTerm/src
     ```
+3. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 3. Run the terminal emulator:
     ```bash
     python main.py

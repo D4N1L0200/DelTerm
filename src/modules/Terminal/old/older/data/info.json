@@ -1,0 +1,225 @@
+{
+  "system": {
+    "name": "Windows",
+    "node_name": "Danilo",
+    "release": "11",
+    "version": "10.0.22635",
+    "machine": "AMD64",
+    "processor": [
+      "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+      "11th Gen Intel(R) Core(TM) i3-1115G4 @ 3.00GHz"
+    ],
+    "ip_address": "192.168.10.105",
+    "mac_address": "cd:53:e2:86:3a:7d",
+    "python_version": "3.12.0",
+    "shell_version": "7.3.10"
+  },
+  "monitors": {
+    "DISPLAY1": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1080,
+      "primary": true
+    }
+  },
+  "boot_timestamp": 1702140742.3514595,
+  "cpu": {
+    "fabricator": "Intel(R)",
+    "gen": "11th",
+    "version": "i3-1115G4",
+    "speed": "3.00GHz",
+    "physical_cores": 2,
+    "total_cores": 4,
+    "max_frequency": 2995.0,
+    "min_frequency": 0.0,
+    "current_frequency": 2995.0,
+    "cores_usage": {
+      "core_0": 1.6,
+      "core_1": 4.7,
+      "core_2": 0.0,
+      "core_3": 0.0
+    },
+    "usage": 14.8
+  },
+  "memory": {
+    "total": 4084523008,
+    "avaliable": 667209728,
+    "used": 3417313280,
+    "percentage": 83.7
+  },
+  "swap": {
+    "total": 9541844992,
+    "avaliable": 8541556736,
+    "used": 1000288256,
+    "percentage": 10.5
+  },
+  "disk": {
+    "drives": {
+      "C": {
+        "file_system_type": "NTFS",
+        "total": 254721126400,
+        "avaliable": 28824444928,
+        "used": 225896681472,
+        "percentage": 88.7
+      },
+      "G": {
+        "file_system_type": "FAT32",
+        "total": 107374182400,
+        "avaliable": 27383222272,
+        "used": 79990960128,
+        "percentage": 74.5
+      }
+    },
+    "io_since_boot": {
+      "total_read": 212082425344,
+      "total_write": 78586060800
+    }
+  },
+  "network": {
+    "interfaces": {
+      "Radmin VPN": [
+        [
+          -1,
+          "02-50-5B-A5-82-B8",
+          null,
+          null,
+          null
+        ],
+        [
+          2,
+          "26.188.88.70",
+          "255.0.0.0",
+          null,
+          null
+        ],
+        [
+          23,
+          "fdfd::1abc:5846",
+          null,
+          null,
+          null
+        ],
+        [
+          23,
+          "fe80::d204:8db9:284b:906a",
+          null,
+          null,
+          null
+        ]
+      ],
+      "Conex\u00e3o Local* 3": [
+        [
+          -1,
+          "AC-5A-FC-5A-FD-D5",
+          null,
+          null,
+          null
+        ],
+        [
+          2,
+          "169.254.188.175",
+          "255.255.0.0",
+          null,
+          null
+        ],
+        [
+          23,
+          "fe80::45af:9c6f:b481:505b",
+          null,
+          null,
+          null
+        ]
+      ],
+      "Conex\u00e3o Local* 4": [
+        [
+          -1,
+          "AE-5A-FC-5A-FD-D4",
+          null,
+          null,
+          null
+        ],
+        [
+          2,
+          "169.254.112.244",
+          "255.255.0.0",
+          null,
+          null
+        ],
+        [
+          23,
+          "fe80::288:82e0:846:205c",
+          null,
+          null,
+          null
+        ]
+      ],
+      "Wi-Fi": [
+        [
+          -1,
+          "AC-5A-FC-5A-FD-D4",
+          null,
+          null,
+          null
+        ],
+        [
+          2,
+          "192.168.10.105",
+          "255.255.255.0",
+          null,
+          null
+        ],
+        [
+          23,
+          "fe80::85e3:bc68:1002:e11c",
+          null,
+          null,
+          null
+        ]
+      ],
+      "Teredo Tunneling Pseudo-Interface": [
+        [
+          -1,
+          "00-00-00-00-00-00-00-E0",
+          null,
+          null,
+          null
+        ],
+        [
+          23,
+          "2001:0:2877:7aa:91:12f2:55ad:164",
+          null,
+          null,
+          null
+        ],
+        [
+          23,
+          "fe80::91:12f2:55ad:164",
+          null,
+          null,
+          null
+        ]
+      ],
+      "Loopback Pseudo-Interface 1": [
+        [
+          2,
+          "127.0.0.1",
+          "255.0.0.0",
+          null,
+          null
+        ],
+        [
+          23,
+          "::1",
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    "sent": 173423414,
+    "recieved": 784196191,
+    "download": 16.15732553365308,
+    "upload": 49.18690687302466
+  }
+}

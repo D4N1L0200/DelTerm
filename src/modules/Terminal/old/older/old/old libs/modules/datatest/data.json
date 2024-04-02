@@ -1,0 +1,10 @@
+{
+  "number": 5,
+  "string": "testing",
+  "float": 52.6,
+  "list": ["test", 4],
+  "dict": {
+    "testing": 6,
+    "what": "ok"
+  }
+}

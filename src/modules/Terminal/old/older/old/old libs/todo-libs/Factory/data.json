@@ -1,0 +1,56 @@
+{
+  "money": 100,
+  "prices": {
+    "resources": {
+      "cardboard": {
+        "buy": 0.24,
+        "sell": 0.18
+      },
+      "concrete": {
+        "buy": 4.19,
+        "sell": 3.14
+      },
+      "magnet": {
+        "buy": 5.68,
+        "sell": 4.26
+      },
+      "metal": {
+        "buy": 3.4,
+        "sell": 2.55
+      },
+      "paint": {
+        "buy": 2.26,
+        "sell": 1.7
+      },
+      "plastic": {
+        "buy": 0.6,
+        "sell": 0.45
+      },
+      "raremetal": {
+        "buy": 7.81,
+        "sell": 5.86
+      },
+      "rubber": {
+        "buy": 1.1,
+        "sell": 0.83
+      },
+      "wire": {
+        "buy": 1.71,
+        "sell": 1.28
+      }
+    }
+  },
+  "inv": {
+    "resources": {
+      "cardboard": 0,
+      "concrete": 0,
+      "magnet": 0,
+      "metal": 0,
+      "paint": 0,
+      "plastic": 0,
+      "rare metal": 0,
+      "rubber": 0,
+      "wire": 0
+    }
+  }
+}

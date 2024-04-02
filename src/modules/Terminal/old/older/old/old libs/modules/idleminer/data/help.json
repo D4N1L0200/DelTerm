@@ -1,0 +1,39 @@
+{
+	"1.0": {
+		"a": "All commands",
+		"b": "Get information about a specific command with [help COMMAND_NAME]",
+		"c": "Use [guide] for a detailed guide on how to use me!",
+		"d": "\n    Gameplay:",
+		"e": "sell",
+		"f": "\n    Misc:",
+		"g": "reset"
+	},
+	"help": {
+		"a": "    Help command",
+		"b": "List all commands or get information about a specific command.",
+		"c": "\n    Alias",
+		"d": "?",
+		"e": "what",
+		"f": "wot",
+		"g": "wat",
+		"h": "wut",
+		"i": "huh",
+		"j": "commands",
+		"k": "cmds",
+		"l": "cmd",
+		"m": "command",
+		"n": "\n    Examples:",
+		"o": "help",
+		"p": "?",
+		"q": "help sell",
+	},
+	"sell": {
+		"a": "    Sell command",
+		"b": "Sell the items in your backpack.",
+		"c": "\n    Alias",
+		"d": "s",
+		"e": "\n    Examples:",
+		"f": "sell",
+		"g": "s"
+	}
+}

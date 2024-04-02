@@ -1,0 +1,21 @@
+{
+  "started": false,
+  "money": 0,
+  "level": 1,
+  "blocksbroken": 0,
+  "backpack": "wooden",
+  "backpacklevel": 1,
+  "itemammount": 0,
+  "backpackmax": 250,
+  "pickaxe": "wooden",
+  "pickaxelevel": 1,
+  "miningspeed": 1,
+  "items": {
+    "stone": 0,
+    "wood": 0,
+    "coal": 0,
+    "dirt": 0,
+    "gravel": 0,
+    "iron": 0
+  }
+}

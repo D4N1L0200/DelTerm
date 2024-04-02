@@ -1,0 +1,25 @@
+{
+	"0": {
+		"wood": 10,
+		"dirt": 11,
+		"gravel": 12,
+		"stone": 15,
+		"coal": 75,
+		"iron": 100
+	},
+	"1": {
+		"wood": 10,
+		"dirt": 5,
+		"gravel": 5,
+		"stone": 72,
+		"coal": 5,
+		"iron": 3
+	},
+	"2": {
+		"dirt": 5,
+		"gravel": 5,
+		"stone": 75,
+		"coal": 10,
+		"iron": 5
+	}
+}

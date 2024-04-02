@@ -91,6 +91,10 @@ class Terminal:
             self.inp_text[: self.cursor_pos] + self.inp_text[self.cursor_pos + 1 :]
         )
 
+    def clear(self) -> None:
+        """Clear the console text."""
+        self.text = []
+
     def move_inp_history(self, direction: int) -> None:
         """Move the input history up or down and set the input text."""
         if self.inp_history:
@@ -107,8 +111,19 @@ class Terminal:
     def run_inp(self) -> None:
         """Run the input text."""
         self.text.append(self.inp_prefix + self.inp_text)
-        response = self.interpreter.run(self.inp_text)
-        self.text.append(response.text)
+
+        response: Response = self.interpreter.run(self.inp_text)
+
+        for action in response.actions:
+            model = action.get_model()
+            if model[0] == "terminal":
+                match model[1]:
+                    case "output":
+                        if action.arg:
+                            self.text.append(action.arg[0])
+                    case "cls":
+                        self.clear()
+
         if self.inp_text:
             self.inp_history.append(self.inp_text)
         self.inp_history_pos = len(self.inp_history)

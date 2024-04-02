@@ -19,13 +19,20 @@ class Interpreter:
         Returns:
             str: The output of the command.
         """
-        if inp_text[:3] == "len":
-            output = str(len(inp_text[4:]))
-            response = Response(output)
-        elif inp_text == "cls":
-            output = ""
-            response = Response(output)
-        else:
-            output = "-1"
-            response = Response(output)
+        spl_inp = inp_text.split(" ")
+        title = spl_inp[0]
+        args = spl_inp[1:]
+
+        match title:
+            case "len":
+                output = str(len(inp_text[4:]))
+                response = Response(title).add_action("terminal.output", output)
+            case "echo":
+                output = " ".join(args)
+                response = Response(title).add_action("terminal.output", output)
+            case "cls":
+                response = Response(title).add_action("terminal.cls")
+            case _:
+                output = "Unknown command."
+                response = Response(title).add_action("terminal.output", output)
         return response

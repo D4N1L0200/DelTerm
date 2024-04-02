@@ -1,6 +1,7 @@
 """A terminal emulator."""
 
 from modules.Terminal.interpreter import Interpreter
+from modules.Terminal.locals import Response
 
 
 class Terminal:
@@ -106,8 +107,8 @@ class Terminal:
     def run_inp(self) -> None:
         """Run the input text."""
         self.text.append(self.inp_prefix + self.inp_text)
-        output: str = self.interpreter.run(self.inp_text)
-        self.text.append(output)
+        response = self.interpreter.run(self.inp_text)
+        self.text.append(response.text)
         if self.inp_text:
             self.inp_history.append(self.inp_text)
         self.inp_history_pos = len(self.inp_history)

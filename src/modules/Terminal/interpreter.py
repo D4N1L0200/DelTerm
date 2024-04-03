@@ -1,6 +1,6 @@
 """An interpreter for the terminal emulator."""
 
-from modules.Terminal.locals import Response
+from src.modules.Terminal.locals import Response
 
 
 class Interpreter:
@@ -32,6 +32,10 @@ class Interpreter:
                 response = Response(title).add_action("terminal.output", output)
             case "cls":
                 response = Response(title).add_action("terminal.cls")
+            case "resize":
+                response = Response(title).add_action("terminal_screen.resize", *args)
+            case "rescale":
+                response = Response(title).add_action("terminal_screen.rescale", *args)
             case _:
                 output = "Unknown command."
                 response = Response(title).add_action("terminal.output", output)

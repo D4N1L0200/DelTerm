@@ -1,5 +1,5 @@
 import pygame as pg
-from locals import RGB, RGBA, Draw
+from src.locals import RGB, RGBA, Draw
 from time import time
 
 
@@ -83,6 +83,23 @@ class Screen:
             new_screen.set_bg_color(color)
 
         self.screens.append(new_screen)
+
+    def rescale(self, width: float, height: float) -> None:
+        xs, ys, ws, hs = self.xywh_scale
+        ws, hs = width, height
+        self.xywh_scale = (xs, ys, ws, hs)
+        self.width = int(ws * self.width)
+        self.height = int(hs * self.height)
+
+    def resize(self, width: int, height: int) -> None:
+        xs, ys, ws, hs = self.xywh_scale
+        ws, hs = width / self.width, height / self.height
+        self.xywh_scale = (xs, ys, ws, hs)
+        self.width = int(ws * self.width)
+        self.height = int(hs * self.height)
+
+
+
 
     def update_sizes(self, width: int, height: int) -> None:
         xs, ys, ws, hs = self.xywh_scale

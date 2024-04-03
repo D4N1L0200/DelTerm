@@ -1,6 +1,6 @@
-from locals import RGB, Draw
-from screens.basic_screens import Screen
-from modules.Terminal.terminal import Terminal
+from src.locals import RGB, Draw
+from src.screens.basic_screens import Screen
+from src.modules.Terminal.terminal import Terminal
 import pygame as pg
 
 
@@ -130,7 +130,16 @@ class TerminalScreen(Screen):
 
         match key:
             case pg.K_RETURN | pg.K_KP_ENTER:
-                self.terminal.run_inp()
+                for action in self.terminal.run_inp():
+                    model = action.get_model()
+                    if model[0] == "terminal_screen":
+                        match model[1]:
+                            case "resize":
+                                if len(action.arg) == 2:
+                                    self.resize(int(action.arg[0]), int(action.arg[1]))
+                            case "rescale":
+                                if len(action.arg) == 2:
+                                    self.rescale(float(action.arg[0]), float(action.arg[1]))
                 self.adjust_pos_y()
             case pg.K_BACKSPACE:
                 self.terminal.backspace_inp()

@@ -1,7 +1,8 @@
 """A terminal emulator."""
 
-from modules.Terminal.interpreter import Interpreter
-from modules.Terminal.locals import Response
+from src.modules.Terminal.interpreter import Interpreter
+from src.modules.Terminal.locals import Action, Response
+from collections.abc import Iterator
 
 
 class Terminal:
@@ -108,7 +109,7 @@ class Terminal:
         """Autocomplete the input text."""
         pass
 
-    def run_inp(self) -> None:
+    def run_inp(self) -> Iterator[Action]:
         """Run the input text."""
         self.text.append(self.inp_prefix + self.inp_text)
 
@@ -123,6 +124,8 @@ class Terminal:
                             self.text.append(action.arg[0])
                     case "cls":
                         self.clear()
+            else:
+                yield action
 
         if self.inp_text:
             self.inp_history.append(self.inp_text)

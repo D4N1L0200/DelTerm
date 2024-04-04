@@ -17,7 +17,7 @@ class Interpreter:
             command (str): The command to run.
 
         Returns:
-            str: The output of the command.
+            Response: The response for the command.
         """
         spl_inp = inp_text.split(" ")
         title = spl_inp[0]
@@ -40,3 +40,14 @@ class Interpreter:
                 output = "Unknown command."
                 response = Response(title).add_action("terminal.output", output)
         return response
+
+    def get_autocompletions(self, inp_text: str) -> list[str]:
+        """Autocomplete the input text.
+
+        Args:
+            inp_text (str): The input text.
+
+        Returns:
+            list[str]: The avaliable autocompletions.
+        """
+        return ["test", "other", "this"]

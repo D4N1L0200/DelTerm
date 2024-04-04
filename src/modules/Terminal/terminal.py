@@ -16,6 +16,8 @@ class Terminal:
         inp_history_pos (int): The input history position.
         cursor_pos (int): The cursor position.
         interpreter (Interpreter): The interpreter.
+        autocomplete_idx (int): The autocomplete index.
+        completions (list[str]): The available autocompletions.
     """
 
     def __init__(self) -> None:
@@ -26,6 +28,8 @@ class Terminal:
         self.inp_history_pos: int = 0
         self.cursor_pos: int = 0
         self.interpreter: Interpreter = Interpreter()
+        self.autocomplete_idx: int = 0
+        self.completions: list[str] = []
 
     def move_cursor(self, direction: int) -> None:
         """Move the cursor left or right.
@@ -76,7 +80,7 @@ class Terminal:
         self.inp_text = (
             self.inp_text[: self.cursor_pos] + inp + self.inp_text[self.cursor_pos :]
         )
-        self.move_cursor(1)
+        self.move_cursor(len(inp))
 
     def backspace_inp(self) -> None:
         """Delete the character before the cursor."""
@@ -107,7 +111,23 @@ class Terminal:
 
     def autocomplete(self) -> None:
         """Autocomplete the input text."""
-        pass
+        self.write_inp(self.get_current_autocomplete())
+
+    def update_autocomplete(self) -> None:
+        """Update the autocomplete list."""
+        self.completions = self.interpreter.get_autocompletions(self.inp_text)
+        self.autocomplete_idx = 0
+
+    def move_autocomplete(self, direction: int) -> None:
+        """Move the autocomplete index up or down."""
+        self.autocomplete_idx += direction
+        self.autocomplete_idx = max(0, min(self.autocomplete_idx, len(self.completions) - 1))
+
+    def get_current_autocomplete(self) -> str:
+        """Get the current autocompletion."""
+        if self.completions:
+            return self.completions[self.autocomplete_idx]
+        return ""
 
     def run_inp(self) -> Iterator[Action]:
         """Run the input text."""
@@ -128,7 +148,11 @@ class Terminal:
                 yield action
 
         if self.inp_text:
-            self.inp_history.append(self.inp_text)
+            if self.inp_history:
+                if self.inp_history[-1] != self.inp_text:
+                    self.inp_history.append(self.inp_text)
+            else:
+                self.inp_history.append(self.inp_text)
         self.inp_history_pos = len(self.inp_history)
         self.move_cursor(-len(self.inp_text))
         self.inp_text = ""

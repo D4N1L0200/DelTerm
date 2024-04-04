@@ -126,6 +126,12 @@ class TerminalScreen(Screen):
                     self.terminal.move_cursor_word(-1)
                 case pg.K_RIGHT:
                     self.terminal.move_cursor_word(1)
+                case pg.K_UP:
+                    self.terminal.move_autocomplete(1)
+                case pg.K_DOWN:
+                    self.terminal.move_autocomplete(-1)
+                case pg.K_SPACE:
+                    self.terminal.update_autocomplete()
             return key, unicode
 
         match key:

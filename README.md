@@ -2,7 +2,7 @@
 
 DelTerm is a simple terminal emulator implemented in Python.
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot_2.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -14,10 +14,12 @@ DelTerm is a simple terminal emulator implemented in Python.
 
 ## Introduction
 
-DelTerm is a lightweight terminal emulator designed to provide basic functionalities for interacting with the command line, although it currently only counts the characters in the input. It is implemented in Python using standard libraries and pygame, making it easy to understand and extend.
+DelTerm is a lightweight terminal emulator designed to provide basic functionalities and is made with extensibility in mind, enabling users to create modules. It is implemented in Python using standard libraries and pygame, making it easy to understand and extend.
+
+## Features:
+- Basic command execution
 
 ## Planned Features:
-- Basic command execution
 - Support for common command-line utilities
 - Enable the user to create, delete and move windows
 - Support for extensions: screens, programs and themes
@@ -30,7 +32,7 @@ DelTerm is a lightweight terminal emulator designed to provide basic functionali
     ```
 2. Navigate to the project directory:
     ```bash
-    cd DelTerm/src
+    cd DelTerm
     ```
 3. Install dependencies:
     ```bash
@@ -38,8 +40,26 @@ DelTerm is a lightweight terminal emulator designed to provide basic functionali
     ```
 3. Run the terminal emulator:
     ```bash
-    python main.py
+    python src/main.py
     ```
+   
+## Usage
+
+Terminal provides a simple command-line interface for executing commands. Bellow are some basic commands to get you started:
+
+### Misc:
+- 'len': Counts the amount of characters in the message.
+- 'echo': Replies with the same message.
+- 'help': Shows a list of available commands.
+- 'exit': Exits the app.
+
+### Terminal:
+- 'cls': Clear the terminal screen.
+- 'resize': Resizes terminal screen to pixel resolution.
+- 'rescale': Rescales terminal screen to relative scale.
+- 'sset': Sets a value for the terminal config.
+- 'sget': Gets a value from the terminal config.
+- 'sreload': Reloads all saved values from the terminal config.
 
 ## Contributing
 

@@ -1,8 +1,9 @@
 """A terminal emulator."""
 
-from src.modules.Terminal.interpreter import Interpreter
-from src.modules.Terminal.locals import Action, Response
+from .interpreter import Interpreter
+from .locals import Action, Response
 from collections.abc import Iterator
+from src.modules.FileManager import JSON
 
 
 class Terminal:
@@ -21,7 +22,6 @@ class Terminal:
     """
 
     def __init__(self) -> None:
-        self.inp_prefix: str = "> "
         self.inp_text: str = ""
         self.text: list[str] = []
         self.inp_history: list[str] = []
@@ -30,6 +30,17 @@ class Terminal:
         self.interpreter: Interpreter = Interpreter()
         self.autocomplete_idx: int = 0
         self.completions: list[str] = []
+        self.set: JSON = JSON("Terminal/data/settings.json")
+        self.inp_prefix: str = ""
+        self.inp_history_size: int = 0
+        self.chat_history_size: int = 0
+        self.reload_settings()
+
+    def reload_settings(self) -> None:
+        """Reload the settings."""
+        self.inp_prefix = self.set.d["terminal"]["prefix"]
+        self.inp_history_size = self.set.d["terminal"]["inp_history_size"]
+        self.chat_history_size = self.set.d["terminal"]["chat_history_size"]
 
     def move_cursor(self, direction: int) -> None:
         """Move the cursor left or right.
@@ -115,7 +126,7 @@ class Terminal:
 
     def update_autocomplete(self) -> None:
         """Update the autocomplete list."""
-        self.completions = self.interpreter.get_autocompletions(self.inp_text)
+        self.completions = self.interpreter.get_auto_completions(self.inp_text)
         self.autocomplete_idx = 0
 
     def move_autocomplete(self, direction: int) -> None:
@@ -142,10 +153,29 @@ class Terminal:
                     case "output":
                         if action.arg:
                             self.text.append(action.arg[0])
+                    case "help":
+                        self.text.append(str(list(self.interpreter.commands)))
                     case "cls":
                         self.clear()
+                    case "set":
+                        match model[2]:
+                            case "get":
+                                self.text.append(f"{action.arg[0]}: {self.set.d["terminal"][action.arg[0]]}")
+                            case "set":
+                                try:
+                                    val = int(action.arg[1])
+                                except ValueError:
+                                    val = " ".join(action.arg[1:])
+                                self.set.d["terminal"][action.arg[0]] = val
+                                self.set.save()
+                                self.text.append(f"{action.arg[0]}: {self.set.d["terminal"][action.arg[0]]}")
+                            case "reload":
+                                self.reload_settings()
             else:
                 yield action
+
+        if len(self.text) >= self.chat_history_size:
+            self.text = self.text[-self.chat_history_size + 1:]
 
         if self.inp_text:
             if self.inp_history:
@@ -153,6 +183,10 @@ class Terminal:
                     self.inp_history.append(self.inp_text)
             else:
                 self.inp_history.append(self.inp_text)
+
+        if len(self.inp_history) >= self.inp_history_size:
+            self.inp_history = self.inp_history[-self.inp_history_size:]
+
         self.inp_history_pos = len(self.inp_history)
         self.move_cursor(-len(self.inp_text))
         self.inp_text = ""

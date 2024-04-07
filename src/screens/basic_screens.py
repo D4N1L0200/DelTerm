@@ -1,6 +1,7 @@
 import pygame as pg
 from src.locals import RGB, RGBA, Draw
 from time import time
+from src.modules.Terminal.locals import Action
 
 
 class Screen:
@@ -29,6 +30,7 @@ class Screen:
         self.held_keys: dict[int, str] = {}
         self.held_keys_cooldown: dict[int, tuple[float, float]] = {}
         self.fonts: dict[str, pg.font.Font] = {"default": pg.font.SysFont("", 24)}
+        self.actions: list[Action] = []
 
     def enable(self) -> None:
         self.active = True
@@ -97,9 +99,6 @@ class Screen:
         self.xywh_scale = (xs, ys, ws, hs)
         self.width = int(ws * self.width)
         self.height = int(hs * self.height)
-
-
-
 
     def update_sizes(self, width: int, height: int) -> None:
         xs, ys, ws, hs = self.xywh_scale
@@ -230,6 +229,17 @@ class Screen:
             screen.call_draw_window(window, rel_x, rel_y)
 
     def draw_window(self, window: pg.display, x: int, y: int) -> None: ...
+
+    def dispatch_action(self, action: Action) -> None:
+        self.actions.append(action)
+
+    def get_actions(self) -> list[Action]:
+        for action in self.actions:
+            yield action
+
+        for screen in self.screens:
+            for action in screen.get_actions():
+                yield action
 
 
 class ClickableScreen(Screen):

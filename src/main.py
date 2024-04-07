@@ -104,6 +104,15 @@ class App:
                 elif event.type == pg.KEYUP:
                     self.screen.call_key_up(event.key, event.unicode)
 
+            for action in self.screen.get_actions():
+                model = action.get_model()
+                if model[0] == "app":
+                    match model[1]:
+                        case "exit":
+                            running = False
+                        case _:
+                            pass
+
             self.screen.call_update(pg.mouse.get_pos(), pg.mouse.get_pressed())
             self.screen.call_draw_window(self.window)
 

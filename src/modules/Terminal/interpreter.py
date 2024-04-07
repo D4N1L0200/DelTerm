@@ -1,53 +1,60 @@
 """An interpreter for the terminal emulator."""
 
-from src.modules.Terminal.locals import Response
+from .locals import Response
+from .libs.std import commands
 
 
 class Interpreter:
     """An interpreter for the terminal emulator."""
 
     def __init__(self):
-        pass
+        self.commands: dict[str, dict] = commands
 
-    @staticmethod
-    def run(inp_text: str) -> Response:
-        """Run a command.
+    def run(self, inp_text: str) -> Response:
+        """Parse an input and return the response.
 
         Args:
-            command (str): The command to run.
+            inp_text (str): The input text.
 
         Returns:
-            Response: The response for the command.
+            Response: The response for the input.
         """
+
         spl_inp = inp_text.split(" ")
         title = spl_inp[0]
-        args = spl_inp[1:]
+        response = Response(title)
 
-        match title:
-            case "len":
-                output = str(len(inp_text[4:]))
-                response = Response(title).add_action("terminal.output", output)
-            case "echo":
-                output = " ".join(args)
-                response = Response(title).add_action("terminal.output", output)
-            case "cls":
-                response = Response(title).add_action("terminal.cls")
-            case "resize":
-                response = Response(title).add_action("terminal_screen.resize", *args)
-            case "rescale":
-                response = Response(title).add_action("terminal_screen.rescale", *args)
-            case _:
-                output = "Unknown command."
-                response = Response(title).add_action("terminal.output", output)
+        if title not in self.commands:
+            response.unknown()
+            return response
+
+        args = spl_inp[1:]
+        arg_len = len(args)
+        command = self.commands[title]
+
+        if arg_len < command["min_args"] or (
+            command["max_args"] != -1 and arg_len > command["max_args"]
+        ):
+            response.bad_args(arg_len, command["min_args"], command["max_args"])
+            return response
+
+        if command["pass_args"]:
+            actions = command["func"](args)
+        else:
+            actions = command["func"]()
+
+        for action in actions:
+            response.add_action(action)
         return response
 
-    def get_autocompletions(self, inp_text: str) -> list[str]:
+    @staticmethod
+    def get_auto_completions(inp_text: str) -> list[str]:
         """Autocomplete the input text.
 
         Args:
             inp_text (str): The input text.
 
         Returns:
-            list[str]: The avaliable autocompletions.
+            list[str]: The available completions.
         """
-        return ["test", "other", "this"]
+        return ["test", "other", "this", inp_text]

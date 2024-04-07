@@ -1,0 +1,7 @@
+{
+  "terminal": {
+    "prefix": "> ",
+    "inp_history_size": 100,
+    "chat_history_size": 100
+  }
+}

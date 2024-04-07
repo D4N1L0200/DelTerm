@@ -145,7 +145,11 @@ class TerminalScreen(Screen):
                                     self.resize(int(action.arg[0]), int(action.arg[1]))
                             case "rescale":
                                 if len(action.arg) == 2:
-                                    self.rescale(float(action.arg[0]), float(action.arg[1]))
+                                    self.rescale(
+                                        float(action.arg[0]), float(action.arg[1])
+                                    )
+                    else:
+                        self.dispatch_action(action)
                 self.adjust_pos_y()
             case pg.K_BACKSPACE:
                 self.terminal.backspace_inp()

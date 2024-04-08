@@ -10,10 +10,15 @@ class JSON:
     """A class for managing JSON data."""
 
     def __init__(self, file_path: str) -> None:
-        self._file_path: Path = Path(os.path.join(os.getcwd(), "src/modules/", file_path))
+        self._file_path: Path = Path(
+            os.path.join(os.getcwd(), "src/modules/", file_path)
+        )
         if not os.path.exists(self._file_path):
             raise FileNotFoundError(f"File '{self._file_path}' not found.")
         self.d: dict[str, Any] = self.load()
+
+    def __getitem__(self, item: str) -> Any:
+        return self.d[item]
 
     def load(self) -> dict[str, Any]:
         """Load data from a JSON file."""

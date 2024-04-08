@@ -1,10 +1,9 @@
 import os
 from pathlib import Path
-from json_handler import Data, JSONObj
 
 
 def index():
-    return ["help_", "error_", "cmd", "cd", "cls", "dir", "sett", "show", "todo"]
+    return ["help_", "error_", "cmd", "cd", "cls", "dir", "sett", "show"]
 
 
 def help_(libr, function=None):
@@ -180,15 +179,3 @@ def show(lib, path: str = ""):
             print(f"\n{content}\n")
     except FileNotFoundError:
         lib.error_(lib, f"The file at path '{file_path}' does not exist.")
-
-
-def todo(lib):
-    """
-    Shows current todos.
-        Usage:
-        Show\\all\\todos> todo
-    """
-    todos: JSONObj = Data(lib.settings.data_path, "todos.json")
-    print("\tTODOS:")
-    for item in todos.todos:
-        print(f"- {item}")

@@ -38,9 +38,9 @@ class Terminal:
 
     def reload_settings(self) -> None:
         """Reload the settings."""
-        self.inp_prefix = self.set.d["terminal"]["prefix"]
-        self.inp_history_size = self.set.d["terminal"]["inp_history_size"]
-        self.chat_history_size = self.set.d["terminal"]["chat_history_size"]
+        self.inp_prefix = self.set["terminal"]["prefix"]
+        self.inp_history_size = self.set["terminal"]["inp_history_size"]
+        self.chat_history_size = self.set["terminal"]["chat_history_size"]
 
     def move_cursor(self, direction: int) -> None:
         """Move the cursor left or right.
@@ -154,25 +154,39 @@ class Terminal:
                         if action.arg:
                             self.text.append(action.arg[0])
                     case "help":
-                        self.text.append(str(list(self.interpreter.commands)))
+                        for module in self.interpreter.modules:
+                            self.text.append(f"{module}:")
+                            for command in self.interpreter.modules[module]:
+                                self.text.append(f"\t{command}: {self.interpreter.modules[module][command]['desc']}")
+                            self.text.append("")
                     case "cls":
                         self.clear()
                     case "set":
                         match model[2]:
                             case "get":
-                                self.text.append(f"{action.arg[0]}: {self.set.d["terminal"][action.arg[0]]}")
+                                self.text.append(f"{action.arg[0]}: {self.set["terminal"][action.arg[0]]}\n")
                             case "set":
                                 try:
                                     val = int(action.arg[1])
                                 except ValueError:
                                     val = " ".join(action.arg[1:])
-                                self.set.d["terminal"][action.arg[0]] = val
+                                self.set["terminal"][action.arg[0]] = val
                                 self.set.save()
-                                self.text.append(f"{action.arg[0]}: {self.set.d["terminal"][action.arg[0]]}")
+                                self.text.append(f"{action.arg[0]}: {self.set["terminal"][action.arg[0]]}\n")
                             case "reload":
                                 self.reload_settings()
+                                self.text.append("All settings reloaded\n")
             else:
                 yield action
+
+        for idx, line in enumerate(self.text):
+            line = line.replace("\t", " " * 4)
+            newline = line.find("\n")
+            if newline != -1:
+                self.text.insert(idx + 1, line[newline + 1 :])
+                self.text[idx] = line[:newline]
+            else:
+                self.text[idx] = line
 
         if len(self.text) >= self.chat_history_size:
             self.text = self.text[-self.chat_history_size + 1:]

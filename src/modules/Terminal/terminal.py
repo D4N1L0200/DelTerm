@@ -176,6 +176,28 @@ class Terminal:
                             case "reload":
                                 self.reload_settings()
                                 self.text.append("All settings reloaded\n")
+                    case "modules":
+                        match model[2]:
+                            case "get":
+                                self.text.append(f"Modules: {self.interpreter.get_modules()}\n")
+                            case "load":
+                                if action.arg:
+                                    self.interpreter.load_modules(action.arg)
+                                else:
+                                    self.interpreter.load_modules()
+                                self.text.append("Modules loaded\n")
+                            case "unload":
+                                if action.arg:
+                                    self.interpreter.unload_modules(action.arg)
+                                else:
+                                    self.interpreter.unload_modules()
+                                self.text.append("Modules unloaded\n")
+                            case "reload":
+                                if action.arg:
+                                    self.interpreter.reload_modules(action.arg)
+                                else:
+                                    self.interpreter.reload_modules()
+                                self.text.append("Modules reloaded\n")
             else:
                 yield action
 

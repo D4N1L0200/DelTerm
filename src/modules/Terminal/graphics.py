@@ -1,6 +1,6 @@
 from src.locals import RGB, Draw
 from src.screens.basic_screens import Screen
-from src.modules.Terminal.terminal import Terminal
+from .terminal import Terminal
 import pygame as pg
 
 
@@ -13,7 +13,7 @@ class TerminalScreen(Screen):
         self.has_keyboard_inp = True
         self.terminal: Terminal = Terminal()
         self.pos_y: int = 0
-        self.font_size: int = 32
+        self.font_size: int = 24
         self.fonts["mono"] = pg.font.SysFont("monospace", self.font_size)
 
     def clip_text(self, text: list[str]) -> list[str]:

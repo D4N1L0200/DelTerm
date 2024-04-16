@@ -2,6 +2,7 @@ from .todo import *
 
 commands = {
     "todo": {
+        "type": "command",
         "func": todo,
         "desc": "Show todo list",
         "min_args": 0,

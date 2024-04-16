@@ -1,7 +1,8 @@
 import pygame as pg
-from locals import RGB
-from screens.basic_screens import Screen, ClickableScreen, KeyScreen, TypingScreen
-from screens.terminal_screen import TerminalScreen
+from src.locals import RGB
+from src.screens.basic_screens import Screen, ClickableScreen, KeyScreen, TypingScreen
+from src.modules.Terminal.graphics import TerminalScreen
+from src.modules.Turing.graphics import TuringScreen
 
 
 class App:

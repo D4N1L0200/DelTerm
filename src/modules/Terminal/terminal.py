@@ -154,10 +154,19 @@ class Terminal:
                         if action.arg:
                             self.text.append(action.arg[0])
                     case "help":
+                        def parse_items(block: dict[str, dict], indent: int = 1) -> None:
+                            for name, item in block.items():
+                                if name == "type":
+                                    continue
+                                if item["type"] == "category":
+                                    self.text.append(f"{"\t" * indent}{name.title()}:")
+                                    parse_items(item, indent + 1)
+                                else:
+                                    self.text.append(f"{"\t" * indent}{name}: {item['desc']}")
+
                         for module in self.interpreter.modules:
-                            self.text.append(f"{module}:")
-                            for command in self.interpreter.modules[module]:
-                                self.text.append(f"\t{command}: {self.interpreter.modules[module][command]['desc']}")
+                            self.text.append(f"{module.title()}:")
+                            parse_items(self.interpreter.modules[module])
                             self.text.append("")
                     case "cls":
                         self.clear()

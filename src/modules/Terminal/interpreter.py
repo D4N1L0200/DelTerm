@@ -21,6 +21,29 @@ class Interpreter:
         return list(self.modules)
 
     def load_modules(self, modules=None) -> None:
+        def load(mod_name: str) -> None:
+            def parse_items(block: dict[str, dict], curr_name: str = "") -> None:
+                for name, item in block.items():
+                    if name == "type":
+                        continue
+                    if item["type"] == "category":
+                        if curr_name:
+                            parse_items(item, f"{curr_name}.{name}")
+                        else:
+                            parse_items(item, name)
+                    else:
+                        if curr_name:
+                            self.commands[name] = f"{mod_name}.{curr_name}"
+                        else:
+                            self.commands[name] = mod_name
+
+            module = import_module(f".{mod_name}", "src.modules.Terminal.libs")
+            commands: dict[str, dict] = module.commands
+
+            parse_items(commands)
+
+            self.modules[mod_name] = commands
+
         if modules is None:
             modules = []
 
@@ -32,27 +55,19 @@ class Interpreter:
                 if not lib_folder.is_dir() or lib_folder.name.startswith("_"):
                     continue
 
-                lib_name: str = lib_folder.name
-                module = import_module(f".{lib_name}", "src.modules.Terminal.libs")
-
-                for command in module.commands:
-                    self.commands[command] = lib_name
-                self.modules[lib_name] = module.commands
+                load(lib_folder.name)
         else:
             for module_name in modules:
-                module = import_module(f".{module_name}", "src.modules.Terminal.libs")
-                for command in module.commands:
-                    self.commands[command] = module_name
-                self.modules[module_name] = module.commands
+                load(module_name)
 
-    def unload_modules(self, modules=None, allow_std: bool = False) -> None:
+    def unload_modules(self, modules: list = None, allow_std: bool = False) -> None:
         if modules is None:
-            modules = self.modules.keys()
+            modules = list(self.modules.keys())
 
         if not allow_std and "std" in modules:
             modules.remove("std")
 
-        for module in modules:
+        for module in modules.copy():
             for command in self.modules[module]:
                 del self.commands[command]
             del self.modules[module]
@@ -62,9 +77,9 @@ class Interpreter:
                 if sys_module.startswith(module):
                     del sys.modules[sys_module]
 
-    def reload_modules(self, modules=None) -> None:
+    def reload_modules(self, modules: list = None) -> None:
         if modules is None:
-            modules = self.modules.keys()
+            modules = list(self.modules.keys())
 
         self.unload_modules(modules, allow_std=True)
         if modules:
@@ -93,7 +108,13 @@ class Interpreter:
         args: list[str] = spl_inp[1:]
         arg_len: int = len(args)
         module: str = self.commands[title]
-        command: dict = self.modules[module][title]
+
+        mod_path = module.split(".")
+        mod: dict = self.modules
+        for i in mod_path:
+            mod = mod[i]
+
+        command = mod[title]
 
         if arg_len < command["min_args"] or (
             command["max_args"] != -1 and arg_len > command["max_args"]

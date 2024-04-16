@@ -38,14 +38,14 @@ DelTerm is a lightweight terminal emulator designed to provide basic functionali
     ```bash
     pip install -r requirements.txt
     ```
-3. Run the terminal emulator:
+4. Run the terminal emulator:
     ```bash
     python src/main.py
     ```
    
 ## Usage
 
-Terminal provides a simple command-line interface for executing commands. Bellow are some basic commands to get you started:
+Terminal provides a simple command-line interface for executing commands. Use the 'help' command to see every available command. Bellow are some basic commands to get you started:
 
 ### Misc:
 - 'len': Counts the amount of characters in the message.

@@ -172,7 +172,8 @@ class Screen:
 
         return key, unicode
 
-    def key_up(self, key: int, unicode: str) -> tuple[int, str]:
+    @staticmethod
+    def key_up(key: int, unicode: str) -> tuple[int, str]:
         return key, unicode
 
     def call_update(

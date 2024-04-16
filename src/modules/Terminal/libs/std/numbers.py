@@ -1,12 +1,30 @@
+"""Numbers related commands."""
+
 from ...locals import Action
 
 
 def calc(args: list[str]) -> list[Action]:
-    output = str(eval(" ".join(args))) + "\n"
+    """Calculate a math expression.
+
+    Args:
+        args (list[str]): The arguments for the command.
+
+    Returns:
+        list[Action]: The resulting actions of the command.
+    """
+    output = str(eval(" ".join(args)))  # TODO: REMOVE EVAL
     return [Action("terminal.output", [output])]
 
 
 def convert(args: list[str]) -> list[Action]:
+    """Convert numbers to another unit.
+
+    Args:
+        args (list[str]): The arguments for the command.
+
+    Returns:
+        list[Action]: The resulting actions of the command.
+    """
     num, to = args
     try:
         num = int(num)
@@ -25,32 +43,6 @@ def convert(args: list[str]) -> list[Action]:
             ans = "Unknown unit"
 
     return [Action("terminal.output", [str(ans)])]
-
-    #     case "temperature" | "temp":
-    #         match from_:
-    #             # Convert 'from_' to celsius
-    #             case "fahrenheit" | "f":
-    #                 Cans = (num - 32) * 5 / 9
-    #             case "kelvin" | "k":
-    #                 Cans = num - 273.15
-    #             case "rankine" | "r":
-    #                 Cans = (num - 491.67) * 5 / 9
-    #             case "celsius" | "c":
-    #                 Cans = num
-    #         match to:
-    #             # Convert celsius to 'to'
-    #             case "fahrenheit" | "f":
-    #                 ans = (Cans * 9 / 5) + 32
-    #             case "kelvin" | "k":
-    #                 ans = Cans + 273.15
-    #             case "rankine" | "r":
-    #                 ans = (Cans + 273.15) * 9 / 5
-    #             case "celsius" | "c":
-    #                 ans = Cans
-    #
-    # if not _print:
-    #     return ans
-    # print(f"{ans} {to}")
 
 
 # def add(lib, num1, num2, _print=True):

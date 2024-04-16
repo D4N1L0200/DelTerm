@@ -1,6 +1,8 @@
 {
   "todos": [
-    "this is a todo",
-    "this is another todo"
+    "Make the turing machine work",
+    "Add old libraries",
+    "New modules",
+    "Remove eval from std.numbers.calc"
   ]
 }

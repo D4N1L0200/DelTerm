@@ -1,3 +1,5 @@
+"""A simple screen manager."""
+
 import pygame as pg
 from src.locals import RGB
 from src.screens.basic_screens import Screen, ClickableScreen, KeyScreen, TypingScreen
@@ -6,6 +8,15 @@ from src.modules.Turing.graphics import TuringScreen
 
 
 class App:
+    """The main application.
+
+    Attributes:
+        width (int): The width of the window.
+        height (int): The height of the window.
+        window (pg.display): The window.
+        screen (Screen): The main screen.
+    """
+
     def __init__(self, width: int, height: int) -> None:
         pg.init()
         pg.display.set_caption("DelTerm")
@@ -85,6 +96,7 @@ class App:
         self.screen.add_screen(TerminalScreen, (1 / 2, 0, 1 / 2, 1.0), RGB(0, 0, 0))
 
     def run(self) -> None:
+        """Run the program."""
         # Change the next two lines to test1(), test2(), test3() or test4() to see different screens
         self.screen.set_bg_color(RGB(0, 0, 0))
         self.screen.add_screen(TerminalScreen, (0, 0, 1.0, 1.0), RGB(0, 0, 0))

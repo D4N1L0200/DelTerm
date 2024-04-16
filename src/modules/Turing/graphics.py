@@ -1,3 +1,5 @@
+"""Graphics for the Turing emulator."""
+
 from src.locals import RGB, Draw
 from src.screens.basic_screens import Screen
 from .turing import Turing
@@ -11,10 +13,9 @@ class TuringScreen(Screen):
         super().__init__(x, y, width, height, scale)
         self.has_mouse_inp = True
         self.has_keyboard_inp = True
-        self.turing: Turing = Turing()
-        self.pos_y: int = 0
         self.font_size: int = 32
         self.fonts["mono"] = pg.font.SysFont("monospace", self.font_size)
+        self.turing: Turing = Turing()
 
     # def clip_text(self, text: list[str]) -> list[str]:
     #     clipped_text: list[str] = []

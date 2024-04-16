@@ -44,13 +44,13 @@
   },
   "memory": {
     "total": 4084523008,
-    "avaliable": 667209728,
+    "available": 667209728,
     "used": 3417313280,
     "percentage": 83.7
   },
   "swap": {
     "total": 9541844992,
-    "avaliable": 8541556736,
+    "available": 8541556736,
     "used": 1000288256,
     "percentage": 10.5
   },
@@ -59,14 +59,14 @@
       "C": {
         "file_system_type": "NTFS",
         "total": 254721126400,
-        "avaliable": 28824444928,
+        "available": 28824444928,
         "used": 225896681472,
         "percentage": 88.7
       },
       "G": {
         "file_system_type": "FAT32",
         "total": 107374182400,
-        "avaliable": 27383222272,
+        "available": 27383222272,
         "used": 79990960128,
         "percentage": 74.5
       }
@@ -218,7 +218,7 @@
       ]
     },
     "sent": 173423414,
-    "recieved": 784196191,
+    "received": 784196191,
     "download": 16.15732553365308,
     "upload": 49.18690687302466
   }

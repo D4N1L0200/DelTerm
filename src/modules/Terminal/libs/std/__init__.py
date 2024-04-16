@@ -1,3 +1,5 @@
+"""The standard library used in the terminal."""
+
 import src.modules.Terminal.libs.std.misc as misc
 import src.modules.Terminal.libs.std.terminal as terminal
 import src.modules.Terminal.libs.std.modules as modules
@@ -6,7 +8,7 @@ import src.modules.Terminal.libs.std.numbers as numbers
 commands = {
     "len": {
         "type": "command",
-        "func": misc.lenght,
+        "func": misc.length,
         "desc": "Count the length of a string",
         "min_args": 1,
         "max_args": -1,
@@ -36,16 +38,16 @@ commands = {
         "max_args": -1,
         "pass_args": False,
     },
-    "cls": {
-        "type": "command",
-        "func": terminal.cls,
-        "desc": "Clear the terminal",
-        "min_args": 0,
-        "max_args": -1,
-        "pass_args": False,
-    },
     "terminal": {
         "type": "category",
+        "cls": {
+            "type": "command",
+            "func": terminal.cls,
+            "desc": "Clear the terminal",
+            "min_args": 0,
+            "max_args": -1,
+            "pass_args": False,
+        },
         "resize": {
             "type": "command",
             "func": terminal.resize,
@@ -90,7 +92,7 @@ commands = {
     "modules": {
         "type": "command",
         "func": modules.modules,
-        "desc": "Get and manage modules",
+        "desc": "Manage installed modules",
         "min_args": 0,
         "max_args": -1,
         "pass_args": True,
@@ -108,7 +110,7 @@ commands = {
         "convert": {
             "type": "command",
             "func": numbers.convert,
-            "desc": "Convert numbers to another type",
+            "desc": "Convert numbers to another unit",
             "min_args": 2,
             "max_args": 2,
             "pass_args": True,

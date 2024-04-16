@@ -58,7 +58,7 @@ def cls(lib):
     os.system("cls" if os.name == "nt" else "clear")
 
 
-def dir(lib, path: str = ""):
+def dir_(lib, path: str = ""):
     """
     Prints files and folders in directory.
         Usage:
@@ -81,18 +81,6 @@ def dir(lib, path: str = ""):
             else:
                 files.append(item)
         print(f"\\{folder_path.name}")
-        [
-            print(f"\t\\{folder}")
-            for folder in folders
-            if lib.settings.show_hidden_files
-            or not (folder.startswith(".") or folder.startswith("_"))
-        ]
-        [
-            print(f"\t{file}")
-            for file in files
-            if lib.settings.show_hidden_files
-            or not (file.startswith(".") or file.startswith("_"))
-        ]
     else:
         if Path(lib.settings.current_dir).is_file():
             lib.error_(lib, "Cannot show a file, use 'show' instead.")
@@ -104,19 +92,19 @@ def dir(lib, path: str = ""):
                 folders.append(item)
             else:
                 files.append(item)
-        print(f"\\{Path(lib.settings.current_dir).name}")
-        [
-            print(f"\t\\{folder}")
-            for folder in folders
-            if lib.settings.show_hidden_files
-            or not (folder.startswith(".") or folder.startswith("_"))
-        ]
-        [
-            print(f"\t{file}")
-            for file in files
-            if lib.settings.show_hidden_files
-            or not (file.startswith(".") or file.startswith("_"))
-        ]
+    print(f"\\{Path(lib.settings.current_dir).name}")
+    [
+        print(f"\t\\{folder}")
+        for folder in folders
+        if lib.settings.show_hidden_files
+        or not (folder.startswith(".") or folder.startswith("_"))
+    ]
+    [
+        print(f"\t{file}")
+        for file in files
+        if lib.settings.show_hidden_files
+        or not (file.startswith(".") or file.startswith("_"))
+    ]
 
 
 def sett(lib, config: str = "", value: str = ""):
@@ -133,7 +121,7 @@ def sett(lib, config: str = "", value: str = ""):
             return
         var_type, value = value.split(":", maxsplit=1)
         match var_type:
-            # bool:path:str:int:float | bfips
+            # bool:path:str:int:float
             case "bool":
                 if value.lower() == "true":
                     value = True

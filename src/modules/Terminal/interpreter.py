@@ -5,11 +5,16 @@ import sys
 from pathlib import Path
 from importlib import import_module
 
-from .locals import Response
+from .locals import Action, Response
 
 
 class Interpreter:
-    """An interpreter for the terminal emulator."""
+    """An interpreter for the terminal emulator.
+
+    Attributes:
+        commands (dict[str, str]): The commands pointing to the module.
+        modules (dict[str, dict[str, dict]]): The modules and their commands.
+    """
 
     def __init__(self):
         self.commands: dict[str, str] = {}
@@ -18,11 +23,25 @@ class Interpreter:
         self.load_modules()
 
     def get_modules(self) -> list[str]:
+        """Return all active modules.
+
+        Returns:
+            list[str]: A list of modules.
+        """
         return list(self.modules)
 
     def load_modules(self, modules=None) -> None:
+        """Loads modules and their commands.
+
+        Args:
+            modules (list, optional): The modules to load.
+        """
+
         def load(mod_name: str) -> None:
+            """Recursively loads categories and their commands."""
+
             def parse_items(block: dict[str, dict], curr_name: str = "") -> None:
+                """Parse categories and commands."""
                 for name, item in block.items():
                     if name == "type":
                         continue
@@ -61,6 +80,12 @@ class Interpreter:
                 load(module_name)
 
     def unload_modules(self, modules: list = None, allow_std: bool = False) -> None:
+        """Unloads modules and their commands.
+
+        Args:
+            modules (list, optional): The modules to unload.
+            allow_std (bool, optional): Whether to allow the std module.
+        """
         if modules is None:
             modules = list(self.modules.keys())
 
@@ -78,6 +103,11 @@ class Interpreter:
                     del sys.modules[sys_module]
 
     def reload_modules(self, modules: list = None) -> None:
+        """Reloads modules and their commands.
+
+        Args:
+            modules (list, optional): The modules to reload.
+        """
         if modules is None:
             modules = list(self.modules.keys())
 
@@ -87,25 +117,26 @@ class Interpreter:
         else:
             self.load_modules()
 
-    def run(self, inp_text: str) -> Response:
-        """Parse an input and return the response.
+    def run_command(
+        self, title: str, args: list[str], response: Response = None
+    ) -> Response:
+        """Run a command.
 
         Args:
-            inp_text (str): The input text.
+            title (str): Name of the command.
+            args (list[str]): Arguments for the command.
+            response (Response, optional): The response.
 
         Returns:
-            Response: The response for the input.
+            Response: The response for the command.
         """
-
-        spl_inp = inp_text.split(" ")
-        title = spl_inp[0]
-        response = Response(title)
+        if response is None:
+            response = Response(title)
 
         if title not in self.commands:
             response.unknown()
             return response
 
-        args: list[str] = spl_inp[1:]
         arg_len: int = len(args)
         module: str = self.commands[title]
 
@@ -123,12 +154,33 @@ class Interpreter:
             return response
 
         if command["pass_args"]:
-            actions = command["func"](args)
+            actions: list[Action] = command["func"](args)
         else:
-            actions = command["func"]()
+            actions: list[Action] = command["func"]()
 
         for action in actions:
-            response.add_action(action)
+            if action.model == "terminal.run":
+                response = self.run_command(action.arg[0], action.arg[1:], response)
+            else:
+                response.add_action(action)
+        return response
+
+    def run(self, inp_text: str) -> Response:
+        """Parse an input and return the response.
+
+        Args:
+            inp_text (str): The input text.
+
+        Returns:
+            Response: The response for the input.
+        """
+
+        spl_inp = inp_text.split(" ")
+        title = spl_inp[0]
+        args: list[str] = spl_inp[1:]
+
+        response = self.run_command(title, args)
+
         return response
 
     @staticmethod

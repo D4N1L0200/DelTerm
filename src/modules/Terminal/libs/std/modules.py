@@ -1,7 +1,17 @@
+"""Modules related commands."""
+
 from ...locals import Action
 
 
 def modules(args: list[str]) -> list[Action]:
+    """Manage installed modules.
+
+    Args:
+        args (list[str]): The arguments for the command.
+
+    Returns:
+        list[Action]: The resulting actions of the command.
+    """
     if not args:
         return [Action("terminal.modules.get")]
 

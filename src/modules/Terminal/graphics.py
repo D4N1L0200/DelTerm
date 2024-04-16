@@ -1,3 +1,5 @@
+"""Graphics for the Terminal emulator."""
+
 from src.locals import RGB, Draw
 from src.screens.basic_screens import Screen
 from .terminal import Terminal
@@ -45,8 +47,14 @@ class TerminalScreen(Screen):
             self.terminal.text + [self.terminal.inp_prefix + self.terminal.inp_text]
         )
 
-        while (len(text[self.pos_y :])) * self.fonts["mono"].get_height() > self.height:
-            self.pos_y = min(self.pos_y + 1, len(text))
+        font_height: int = self.fonts["mono"].get_height()
+
+        if len(text) * font_height < self.height:
+            self.pos_y = 0
+            return
+
+        while (len(text[self.pos_y :])) * font_height > self.height:
+            self.pos_y += 1
 
     def draw_window(self, window: pg.display, x: int = 0, y: int = 0) -> None:
         if self.active:
@@ -140,6 +148,8 @@ class TerminalScreen(Screen):
                     model = action.get_model()
                     if model[0] == "terminal_screen":
                         match model[1]:
+                            case "adjust_pos_y":
+                                self.adjust_pos_y()
                             case "resize":
                                 if len(action.arg) == 2:
                                     self.resize(int(action.arg[0]), int(action.arg[1]))

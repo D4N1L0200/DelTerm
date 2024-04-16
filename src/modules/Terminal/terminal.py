@@ -18,7 +18,7 @@ class Terminal:
         cursor_pos (int): The cursor position.
         interpreter (Interpreter): The interpreter.
         autocomplete_idx (int): The autocomplete index.
-        completions (list[str]): The available autocompletions.
+        completions (list[str]): The available completions.
     """
 
     def __init__(self) -> None:
@@ -73,7 +73,7 @@ class Terminal:
             self.move_cursor(-text[::-1].find(" ") - offset)
 
     def set_inp(self, inp: str) -> None:
-        """Set the input text and cursor position.
+        """Set the input text and reset cursor position.
 
         Args:
             inp (str): The text to set.
@@ -152,9 +152,10 @@ class Terminal:
                 match model[1]:
                     case "output":
                         if action.arg:
-                            self.text.append(action.arg[0])
+                            self.text.append(action.arg[0] + "\n")
                     case "help":
                         def parse_items(block: dict[str, dict], indent: int = 1) -> None:
+                            """Parse the items in a help block."""
                             for name, item in block.items():
                                 if name == "type":
                                     continue
@@ -170,6 +171,7 @@ class Terminal:
                             self.text.append("")
                     case "cls":
                         self.clear()
+                        yield Action("terminal_screen.adjust_pos_y")
                     case "set":
                         match model[2]:
                             case "get":

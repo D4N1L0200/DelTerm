@@ -1,11 +1,12 @@
-from .misc import *
-from .terminal import *
-from .modules import *
+import src.modules.Terminal.libs.std.misc as misc
+import src.modules.Terminal.libs.std.terminal as terminal
+import src.modules.Terminal.libs.std.modules as modules
+import src.modules.Terminal.libs.std.numbers as numbers
 
 commands = {
     "len": {
         "type": "command",
-        "func": lenght,
+        "func": misc.lenght,
         "desc": "Count the length of a string",
         "min_args": 1,
         "max_args": -1,
@@ -13,7 +14,7 @@ commands = {
     },
     "echo": {
         "type": "command",
-        "func": echo,
+        "func": misc.echo,
         "desc": "Echo the input",
         "min_args": 1,
         "max_args": -1,
@@ -21,7 +22,7 @@ commands = {
     },
     "help": {
         "type": "command",
-        "func": get_help,
+        "func": misc.get_help,
         "desc": "Get help on a command",
         "min_args": 0,
         "max_args": -1,
@@ -29,7 +30,7 @@ commands = {
     },
     "exit": {
         "type": "command",
-        "func": exit_term,
+        "func": misc.exit_term,
         "desc": "Exit the terminal",
         "min_args": 0,
         "max_args": -1,
@@ -37,7 +38,7 @@ commands = {
     },
     "cls": {
         "type": "command",
-        "func": cls,
+        "func": terminal.cls,
         "desc": "Clear the terminal",
         "min_args": 0,
         "max_args": -1,
@@ -47,7 +48,7 @@ commands = {
         "type": "category",
         "resize": {
             "type": "command",
-            "func": resize,
+            "func": terminal.resize,
             "desc": "Resize the terminal screen",
             "min_args": 2,
             "max_args": 2,
@@ -55,7 +56,7 @@ commands = {
         },
         "rescale": {
             "type": "command",
-            "func": rescale,
+            "func": terminal.rescale,
             "desc": "Rescale the terminal screen",
             "min_args": 2,
             "max_args": 2,
@@ -63,7 +64,7 @@ commands = {
         },
         "sset": {
             "type": "command",
-            "func": sset,
+            "func": terminal.sset,
             "desc": "Set a setting in the terminal",
             "min_args": 2,
             "max_args": -1,
@@ -71,7 +72,7 @@ commands = {
         },
         "sget": {
             "type": "command",
-            "func": sget,
+            "func": terminal.sget,
             "desc": "Get a setting in the terminal",
             "min_args": 1,
             "max_args": 1,
@@ -79,7 +80,7 @@ commands = {
         },
         "sreload": {
             "type": "command",
-            "func": sreload,
+            "func": terminal.sreload,
             "desc": "Reload the settings in the terminal",
             "min_args": 0,
             "max_args": -1,
@@ -88,10 +89,29 @@ commands = {
     },
     "modules": {
         "type": "command",
-        "func": modules,
+        "func": modules.modules,
         "desc": "Get and manage modules",
         "min_args": 0,
         "max_args": -1,
         "pass_args": True,
+    },
+    "numbers": {
+        "type": "category",
+        "calc": {
+            "type": "command",
+            "func": numbers.calc,
+            "desc": "Calculate a math expression",
+            "min_args": 1,
+            "max_args": -1,
+            "pass_args": True,
+        },
+        "convert": {
+            "type": "command",
+            "func": numbers.convert,
+            "desc": "Convert numbers to another type",
+            "min_args": 2,
+            "max_args": 2,
+            "pass_args": True,
+        },
     },
 }
